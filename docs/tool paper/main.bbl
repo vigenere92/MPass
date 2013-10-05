@@ -1,0 +1,65 @@
+\begin{thebibliography}{10}
+
+\bibitem{AB93}
+P.~Abdulla and B.~Jonsson.
+\newblock Verifying programs with unreliable channels.
+\newblock In {\em LICS}, 1993.
+
+\bibitem{AAC13}
+P.~A. Abdulla, M.~F. Atig, and J.~Cederberg.
+\newblock Analysis of message passing programs using smt-solvers.
+\newblock Uppsala University.
+
+\bibitem{github.MPass}
+P.~A. Abdulla, M.~F. Atig, S.~Modi, and G.~Saini.
+\newblock \url{https://github.com/vigenere92/MPass}.
+
+\bibitem{AABJ04}
+P.~A. Abdulla, A.~Collomb-Annichini, A.~Bouajjani, and B.~Jonsson.
+\newblock Using forward reachability analysis for verification of lossy channel
+  systems.
+\newblock In {\em FMSD}, page 25(1):39–65, 2004.
+
+\bibitem{BZ83}
+D.~Brand and P.~Zafiropulo.
+\newblock On communicating finite-state machines.
+\newblock {\em J. ACM}, 30(2):323--342, 1983.
+
+\bibitem{CSV2UPPAAL}
+A.~P.~M. Jr., A.~Ravn, J.~Srba, and S.~Vighio.
+\newblock {csv2uppaal}.
+\newblock {\tt https://github.com/csv2uppaal}.
+
+\bibitem{JRSVgit}
+A.~P.~M. Jr., A.~Ravn, J.~Srba, and S.~Vighio.
+\newblock csv2uppaal.
+\newblock https://github.com/csv2uppaal.
+
+\bibitem{lipton}
+R.~Lipton.
+\newblock The reachability problem requires exponential time.
+\newblock Technical Report TR 66, 1976.
+
+\bibitem{MPSV11}
+A.~P. Marques, A.~P. Ravn, J.~Srba, and S.~Vighio.
+\newblock Tool supported analysis of web services protocols.
+\newblock In {\em TTCS}, pages pages 50--64, University of Oslo, 2011.
+
+\bibitem{Rack78}
+C.~Rackoff.
+\newblock The covering and boundedness problems for vector addition systems.
+\newblock {\em Theor. Comput. Sci.}, 6:223--231, 1978.
+
+\bibitem{RSV11}
+A.~P. Ravn, J.~Srba, and S.~Vighio.
+\newblock Modelling and verification of web services business activity
+  protocol.
+\newblock In {\em TACAS}, LNCS, pages pages 357--571. Springer, 2011.
+
+\bibitem{phs-IPL2002}
+P.~Schnoebelen.
+\newblock Verifying lossy channel systems has nonprimitive recursive
+  complexity.
+\newblock {\em Information Processing Letters}, 83(5):251--261, Sept. 2002.
+
+\end{thebibliography}

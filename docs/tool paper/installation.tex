@@ -1,0 +1,243 @@
+\newpage
+\renewcommand\thesection{\Alph{section}}
+\setcounter{section}{0}
+\section {Installation}
+This appendix is intended to guide the reader to use of \MPass\ . It will first describe
+installation of \MPass\ , then give a tutorial on using the \MPass\ . \MPass\ can be downloaded from \cite{github.MPass} (https://github.com/vigenere92/MPass).
+The sources are available as a tar ball via the “Downloads” section (recommended) as well as by git clone.
+
+\subsection{Requirements}
+\begin{itemize}
+    \item[$\bullet$] A C++ compiler supporting C++11. For example g++ version 4.6 or higher.
+
+    \item[$\bullet$] Z3 SMT 2.0 Solver. 
+
+    \item[$\bullet$] Lemon Graph Library.
+
+    \item[$\bullet$] pdflatex (Optional).
+\end{itemize}
+
+The Z3 SMT Solver can be downloaded from  http://z3.codeplex.com. It should be installed in the bin directory, so that it can be called using
+"z3 -smt2 filename" from the terminal. Lemon Graph Library can be downloaded from http://lemon.cs.elte.hu. pdflatex is an optional feature. It is required
+only for creating pdf's for the results for various runs.
+
+
+\subsection{Installation}
+The \MPass\ Tool can be installed by using the following procedure.
+\begin{itemize}
+    \item[$\bullet$] Copy the MPass\textunderscore result folder from the MPass directory to your home folder. This is done to make the MPass tool always consistent irrespective of the location where parent directory is downloaded by the user.
+    \item[$\bullet$] Using terminal, go to the location of the MPass folder and execute the following commands.
+\end{itemize}
+\begin{Verbatim}
+        $ touch NEWS README AUTHORS ChangeLog
+        $ autoreconf --force --install
+        $ ./configure
+        $ make
+        $ sudo make install
+\end{Verbatim}
+
+\subsection{Installation Options}
+
+The configure script is built with GNU autotools, and should accept the usual
+options and environment variables.
+\\
+\\
+\emph{Changing Installation Directory} 
+\\
+The command ’sudo make install’ will install MPass Tool in the directories which are standard on your system. To override this behaviour add the switch
+--prefix to the ’./configure’ command:
+\\
+\\
+\hspace*{5mm}\$ ./configure --prefix=/your/desired/install/path
+
+\section{ \MPass\ Tutorial}
+This section gives you a short tutorial on the usage of \MPass\ .
+\subsection{ Creating the Settings File}
+Settings file contains the information on the path to the XML file, semantics of the channels, bound, the states for 
+which the reachability is to be checked and the type of channels to be formed for calculating the reachability.The format of Settings file is as follows:
+\\
+\\
+\hspace*{16mm}\emph{file} \hspace*{19mm}     path\_to\_xml\_file
+\\
+\hspace*{15mm}\emph{semantics} \hspace*{10mm}    channel\_semantics
+\\
+\hspace*{15mm}\emph{bound} \hspace*{15mm} bound\_for\_the\_processes
+\\
+\hspace*{15mm}\emph{bad}   \hspace*{19mm}   bad\_process   bad\_state
+\\
+\hspace*{15mm}\emph{channel\_type}  \hspace*{6mm}   type\_of\_channel
+\\\\
+
+{\tt path\_to\_xml\_file} is path to the xml-files of protocols present inside the MPass directory. So before calling the MPass tool, change {\tt path\_to\_xml\_file} argument inside the 'Settings.txt' file. By default, xml-files are present in the 'Includes/Protocols' folder which is inside the 'MPass directory'.
+
+
+\subsection{Description of Settings File}
+\begin{itemize}
+\item[$\bullet$] {\bf file}: It refers to the location of the XML file to be verified.
+
+\item[$\bullet$] {\bf semantics}: It refers to the semantics of the channels. It can be lossy, stuttering or unordered.
+
+\item[$\bullet$] {\bf bound}: It refers to the number of bounds for the automata.
+
+\item[$\bullet$] {\bf bad}: It takes pairs of values. First is the name of the process in which the reachability is to be checked and the second is the  set of states for which reachability is being checked.\\
+\emph{{\bf NOTE: }Bad state for more one process can also be entered one after the other in the same format as diplayed in the example below.}\\
+
+Example:
+\begin{verbatim}
+        bad SENDER Q0 Q1 RECEIVER INVALID
+        bad SENDER Q0 RECEIVER INVALID
+        bad RECEIVER INVALID
+\end{verbatim}
+
+\item[$\bullet$] {\bf channel\_type}: It refers to the type of channel. It can be :\\\\
+{\tt prefix} : For making channels based on the first alphabet of the messages.\\
+{\tt process}: For making one channel for each process.\\
+{\tt xml} : For making channels in the same way as specified in the xml file of the protocol.
+\end{itemize}
+\pagebreak
+\Cref{fig:settings} shows a sample Settings file for the Alternating Bit Protocol with its XML file(ABP.xml) in the default 'Includes/Protocols' folder.
+\begin{figure}[h]
+  \begin{center}
+    \fbox{\parbox{\textwidth}{%
+file  /home/rator/MPass/Includes/Protocols/ABP.xml\\
+semantics  lossy \\
+bound  3\\
+bad  RECEIVER  INVALID\\
+channel\_type  process\\
+}}
+  \end{center}
+\caption{An example of Settings file}\label{fig:settings}
+\end{figure}
+\\
+In case the path to XML file for the protocol is incorrect in the Settings file, you will get the following error message:\\\\
+{\tt ----------\\
+----------\\
+; loading xml file\\
+Xml File not found!\\
+Exiting\\}
+\\
+If so, please make sure the path to the XML file for the protocol is correct.
+
+\subsection{Running the \MPass\ for the given Protocol}
+The \MPass\ can be called from the command line using 'MPass' followed by {\tt Path to the Settings file} which is expected as the first argument.By default, it is present in the 'src' folder which is inside the 'MPass directory'.Thus MPass tool can be called as (if Settings file path is not changed)
+\begin{verbatim}
+MPass src/Settings.txt
+\end{verbatim}\\\\
+In case the Settings file is not found, you will receive the following error message:\\\\
+{\tt Settings File not found\\}
+\\
+If so, please make sure the path to Settings file is correct with respect to the current directory.\\
+When the \MPass\ is called for a Settings file, it prints the results in 4 sections. In the first section it prints (step-by-step) various operations that are being applied to the Automata.
+\Cref{fig:output} shows the screen dump, when \MPass\ is run on the Settings file mentioned in \Cref{fig:settings}.\\
+\begin{figure}[H]
+  \begin{center}
+    \fbox{\parbox{\textwidth}{%
+----------\\
+----------\\
+; loading xml file\\
+
+; adding states for process SENDER\\
+; adding transitions for process SENDER\\
+; adding states for process RECEIVER\\
+; adding transitions for process RECEIVER\\
+; removing send loops\\
+; declaring index and occurence variables for send transitions \\
+; declaring index, occurence and match variables for receive transitions \\
+; declaring index and occurence variables for eps transitions between two phases \\
+; declaring index and occurence variables for send transitions \\
+; declaring index, occurence and match variables for receive transitions \\
+; declaring index and occurence variables for eps transitions between two phases \\
+; adding in and out flow constraint \\
+; Initial state constraint \\
+; Final state constraint \\
+; adding computation order constraint and ensuring connectivity \\
+; adding in and out flow constraint \\
+; Initial state constraint \\
+; Final state constraint \\
+; adding computation order constraint and ensuring connectivity \\
+; declaring distinct index condition for each pair of non unique transitions \\
+; enforcing matching of each occuring receive transitions \\
+; enforcing computation order for transitions pair per channel\\
+}}
+  \end{center}
+\caption{Operations applied to the Automata}\label{fig:output}
+\end{figure}
+After applying various operations to the automata of the protocol, it then prints out the statistics of the automata, ie, the number of states and transitions that were added to the Automata. \Cref{fig:data} shows the screen dump for the statistics on Automata.\\
+Detailed information regarding the notations of transitions can be found in \cite{AAC13}
+\begin{figure}[H]
+  \begin{center}
+    \fbox{\parbox{\textwidth}{%
+----------AUTOMATA STATISTICS----------\\
+Total Number of non-unique transitions: 249\\
+Total Number of unique transitions: 6\\
+Total Number of states: 156\\
+Number of Assertions : 2519\\
+
+}}
+  \end{center}
+\caption{Automata Statistics}\label{fig:data}
+\end{figure}
+After displaying the statistics of the automata formed, MPass then prints out the time taken to generate quantifier-free Presburger formula and along with the time taken by Z3 SMT-solver to compute the satisfiability of the generated quantifier-free Presburger formula. \Cref{fig:time} shows the screen dump for the time statistics.
+\begin{figure}[H]
+  \begin{center}
+    \fbox{\parbox{\textwidth}{%
+----------TIME STATISTICS----------\\
+Automata and Constraint genertaion time for generating Presburger Formula: 0.05 seconds \\
+SMT Solver time for generating output by Presburger\_formula theorem Prover: 1 seconds \\
+Total time elapsed: 1.05 seconds \\
+
+}}
+  \end{center}
+\caption{Time Statistics}\label{fig:time}
+\end{figure}
+In this fourth and the final section, MPass display the results that whether the given state is reachable or not. Along with this it also displays the values that were provided in the Settings file. \Cref{fig:result} shows the screen dump for the result.
+\begin{figure}[H]
+  \begin{center}
+    \fbox{\parbox{\textwidth}{%
+----------RESULT----------\\
+Protocol\_name = ABP\\
+Bad\_state\_name = RECEIVER Invalid\\
+Semantics = LCS\\
+Channel\_Type = By process\\
+Constraint Generation Time = 0.05 sec\\
+SMT Time = 1 sec\\
+Total Time = 1.05 sec\\
+Assertions = 2519\\
+Bound = 3\\
+Result = S(unsat)\\
+Thus, the bad State is not reachable for lossy semantics within the given bound : 3\\
+----------\\
+----------\\
+
+
+}}
+  \end{center}
+\caption{Reachability Result}\label{fig:result}
+\end{figure}
+\pagebreak
+
+\subsection{Other Optional Arguments}
+\def\verbatim@font{\normalfont\ttfamily}
+
+A pdf containing the results of the MPass can also be generated if pdflatex is 
+installed in the system.This can be done using {\tt new} or {\tt old} arguments in addition to the one which we were using before. In addition to the pdf containing
+the result, two text files, one containing the Presburger formula generated for the Automata and the other containing the result of SMT solver are also generated. 
+These files are placed in MPass\_result folder. This option can be used as follows :\\\\
+1. Using the new option:\\
+A new pdf containing the results can be generated using this option. The pdf is placed
+in the {\tt MPass\textunderscore result/Result} folder in the home directory.\\
+It is used as follows :
+\begin{Verbatim}
+MPass path_to_settings_file new
+\end{Verbatim}
+2. Using the old option:\\
+The result for this run of the MPass is appended to the previously genereated pdf. 
+The pdf is placed in the {\tt MPass\textunderscore result/Result} folder in the home directory.\\
+It is used as follows :
+\begin{Verbatim}
+MPass path_to_settings_file old
+\end{Verbatim}
+
+
+
+

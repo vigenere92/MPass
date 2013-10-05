@@ -1,0 +1,5 @@
+file /home/rator/Verifier-master/Includes/Protocols/BRP.xml
+semantics lossy
+bound 3
+bad RECEIVER Invalid
+channel_type process

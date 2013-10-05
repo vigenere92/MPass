@@ -1,0 +1,77 @@
+\documentclass{llncs}
+\usepackage{amsmath,amssymb,amsfonts,latexsym,stmaryrd}
+\usepackage[ruled,noend,nofillcomment,linesnumbered]{algorithm2e}
+\usepackage{pslatex}
+\usepackage[english]{babel}
+\selectlanguage{english}
+
+\usepackage{float}
+\usepackage{pdfpages}
+\usepackage{amssymb}
+\usepackage[colorlinks]{hyperref}
+\usepackage{cite}
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp}
+\usepackage{ucs}
+\usepackage{extarrows}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage[mathscr]{euscript}
+\usepackage{color}
+\usepackage{pifont}
+\usepackage{subfigure,multimedia}
+\usepackage{delarray}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{cleveref}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{pgf}
+\usepackage{proof}
+\usepackage{url}
+\usetikzlibrary{chains,positioning,fit,shapes,arrows,calc,decorations.pathreplacing,decorations.pathmorphing}
+\usetikzlibrary{shapes}
+\usetikzlibrary{backgrounds,calc}
+
+\newcommand{\MPass}{\textsc{MPass}}
+\newcommand{\binary}{MPass}
+\newcommand{\transition}{t}
+\newcommand{\occvar}{{\tt occ}}
+\newcommand{\occvarof}[1]{\occvar\left({#1}\right)}
+\newcommand{\indexvar}{{\tt index}}
+\newcommand{\indexvarof}[1]{\indexvar\left({#1}\right)}
+\newcommand{\matchingvar}{{\tt match}}
+\newcommand{\matchingvarof}[1]{\matchingvar\left({#1}\right)}
+
+\begin{document}
+\title{\MPass:  An Efficient  Tool for the Analysis of Message-Passing Programs\thanks{This research was in part funded by the
+    Uppsala Programming for Multicore Architectures Research Center
+    (UPMARC)}}
+
+\author{Parosh Aziz Abdulla\inst{1} \and Mohamed Faouzi Atig\inst{1} \and Gaurav Saini\inst{2} \and Subham Modi\inst{3}}
+\institute{Uppsala University, Sweden \and Indian Institute of Technology, Ropar \and Indian Institute of Technology, Kanpur}
+
+\maketitle
+
+\input abstract
+
+\input introduction 
+
+\input MPass-tool 
+
+\input implementation
+
+\input experimental
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+\input installation
+
+\end{document}

@@ -1,0 +1,20 @@
+\section{Implementation}
+
+\MPass\ tool is implemented in C++ language with the help of {\tt lemon} and {\tt pugixml} library.
+Tool is programmed in an user friendly manner and is, thus, easy for any further extension or use.
+
+\subsubsection{Optimisations.}
+
+Various optimization techniques were implemented to increase the efficiency of checking the bounded-phase reachability problem (in comparison  to the approach described in  \cite{AAC13}) such as:
+
+\begin{itemize}
+\item[$\bullet$] \emph{Ignoring multiple copies for each process.}
+Instead of making 'k' copies for each process (where k is some natural 
+number denoting the bound for the number of phases within each process), 
+we make only two copies per process (send and receive copy) as described in \cref{subsec:copies}.
+\item[$\bullet$] \emph{Removal of strongly connected component.}
+We evaluate all the sets of strongly connected components in the send copy of each process. 
+Then, we replace  each strongly connected component  by   two new states. We add a send operation between these two newly added states if this operation appears in this set of strongly connected component.  Out of these two added states, the initial state will now be the target state for  all the transitions entering into this set of strongly connected component  and the other state (final state) will be 
+the source state for all the transition leaving from this set. Therefore, each send copy of each 
+process is optimized in such a way to reduce the number of formed constraints .
+\end{itemize}

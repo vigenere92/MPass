@@ -1,0 +1,86 @@
+\section{Introduction}
+
+\MPass\ is an open source and  efficient tool for the verification of message-passing programs 
+communicating in an asynchronous manner over unbounded  channels.
+ The verification problem  such as the reachability problem are either undecidable  \cite{BZ83} or have high complexity  \cite{AB93,Rack78,phs-IPL2002,lipton}, even under the assumption that each process is finite-state. 
+
+
+%
+%The verification problem such as reachability problem is undecidable for programs having perfect channels 
+%even if the number of states in each process are finite but it becomes decidable if we have 
+%lossy, stuttering or unordered channels \cite{AB93}.
+%However, to decide the reachability problem in later case we have high complexity obstacles.
+%Thus in order to avoid this, one useful approach, \emph{context bounding} \cite{SJ05}, was proposed recently.
+%This idea limits the number of context switches between two processes because of which 
+%we have a trade off between the extent of verification and computational complexity.\\
+\MPass\ verifies the reachability problem of message-passing programs or protocols in which each process is restricted to performing at most $k$ phases (for some natural number $k$).
+A {\it phase}  is a run where the process performs  either send or receive operations
+(but not both). The bounded-phase  restriction does not limit the \emph{number} of
+sends or receives,  and in particular it does not put any restriction on the length of the
+run or the size of the buffers.
+
+%
+%
+%computation with the phase bounded by some natural number. In each phase, a process can perform 
+%either send transitions or receive transitions (but not both). The transition consisting of no operation, 
+%but just the change of states, can be performed in either of these phases.\\\\
+
+\MPass\ can handle different variants of channel semantics, such as
+{\it lossy}, {\it stuttering}, and {\it multiset} that
+allow the messages inside the channels to be lost,
+duplicated, and re-ordered respectively.
+
+
+
+%
+\MPass\ is based on the framework   described in \cite{AAC13} which translates bounded phase reachability problem  into the satisfiability of quantifier-free Presburger formula in polynomial time, along with several optimizations. This allows  leveraging the full power of state-of-the-art
+{\sc smt}-solvers for obtaining a very efficient solution to the bounded-phase reachability problem for all above mentioned semantics. 
+
+
+\MPass\ turns this verification task into a push-button exercise,   it can also  be  applied on a number of message-passing program with promising results. More precisely:
+
+%Thus, we can use one of the various SMT solvers which, efficiently, comment on the satisfiabilty of the 
+%generated quantifier-free Presburger formula for all the above mentioned semantics.
+%It is created in such a way that it can be applied on a number of message paasing program with promising results.
+
+
+\begin{enumerate}
+\item[$\bullet$] \MPass\ is an open source \cite{github.MPass}
+  verification tool that analyzes reachability problem in message-passing programs having their phase bounded
+\item[$\bullet$] If \MPass\ finds a bug then it is a real bug of the input program.
+
+\item[$\bullet$] If the bound on the number of phases increases  then the set of explored traces increases, and in the limit every run of the programs is then explored.   
+\item[$\bullet$] It converts bounded phase reachability problem into quantifier-free presburger formula and then call 
+  SMT Solver to output the satisfiability results.
+  
+%\item[$\bullet$] it performs reachability analysis for faulty protocols also which differs from therir original 
+%  one at some or many transition.
+\item[$\bullet$] It provides user with the computational time used both by the constraint generation as well as 
+  SMT solver to analyze the complexity of the provided protocol. Details regarding these two extractions are given in \cref{sec:logic}.
+\item[$\bullet$] It provides user with the satisfiability results in an user-friendly manner by generating a separate tex file.
+  More information regarding this can be found within the tool \cite{github.MPass}.
+\end{enumerate}
+
+\subsubsection{Targeted users}
+\MPass\ can be used by these group of users :
+%
+\begin{enumerate}
+\item Various researchers and Computer scientists can use the freely available and open source 
+  code of \MPass\ to compare with other approaches for the verification of message-passing programs, to improve and optimize the implemented techniques (by interfacing with other  other efficient SMT-solver) or by improving the used data structures for handling the protocols, or to target new platforms and programs (e.g., adding shared variables or  other channel semantics).
+  
+  
+  
+  
+%  optimize it further or improve the 
+%  implementation techniques thereby extending its features further   It can also be used
+%  
+  
+\item Teachers of distributed  systems  and concurrent programming classes can use (and augment) \MPass\ 
+  to familiarize their students with message-passing programs.  In particular the precision of \MPass\ can concretely illustrate the difficulty of writing a correct concurrent programs.
+  
+%  
+%  They can even illustrate the effects of protocal 
+%  and reachability settings provided on the running time of the tool.
+\item Software developers who are working on message-passing programs can use \MPass\   to verify their tentative soluteions.
+  It can also be used to check faultiness of a particular protocol by verifying the reachability of an Invalid state.
+\end{enumerate}

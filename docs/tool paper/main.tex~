@@ -1,0 +1,86 @@
+\documentclass{llncs}
+\usepackage{amsmath,amssymb,amsfonts,latexsym,stmaryrd}
+\usepackage[ruled,noend,nofillcomment,linesnumbered]{algorithm2e}
+\usepackage{pslatex}
+\usepackage[english]{babel}
+\selectlanguage{english}
+
+\usepackage{pdfpages}
+\usepackage{amssymb}
+\usepackage[colorlinks]{hyperref}
+\usepackage{cite}
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp}
+\usepackage{ucs}
+\usepackage{extarrows}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage[mathscr]{euscript}
+\usepackage{color}
+\usepackage{pifont}
+\usepackage{subfigure,multimedia}
+\usepackage{delarray}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{xspace}
+%\usepackage{bbding}
+\usepackage{cleveref}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{pgf}
+\usepackage{proof}
+\usepackage{url}
+\usetikzlibrary{chains,positioning,fit,shapes,arrows,calc,decorations.pathreplacing,decorations.pathmorphing}
+\usetikzlibrary{shapes}
+\usetikzlibrary{backgrounds,calc}
+
+\newcommand{\verifier}{\textsc{Verifier}}
+\newcommand{\binary}{verifier}
+\newcommand{\transition}{t}
+\newcommand{\occvar}{{\tt occ}}
+\newcommand{\occvarof}[1]{\occvar\left({#1}\right)}
+\newcommand{\indexvar}{{\tt index}}
+\newcommand{\indexvarof}[1]{\indexvar\left({#1}\right)}
+\newcommand{\matchingvar}{{\tt match}}
+\newcommand{\matchingvarof}[1]{\matchingvar\left({#1}\right)}
+
+\begin{document}
+
+\title{\verifier, An efficient and computational tool for analysis of message passing programs \thanks{This research was in part funded by the
+    Uppsala Programming for Multicore Architectures Research Center
+    (UPMARC), the National Science Council of Taiwan project
+    no. NSC-101-2221-E-001-007, and the CENIIT research organization
+    (project 12.04).}}
+
+\author{Parosh Aziz Abdulla\inst{1} \and Mohamed Faouzi Atig\inst{1} \and Gaurav Saini\inst{2} \and Subham Modi\inst{3}}
+\institute{Uppsala University, Sweden \and Indian Institute of Technology, Ropar \and Indian Institute of Technology, Kanpur}
+
+% \sloppy
+\maketitle
+
+\input abstract
+
+\input introduction 
+
+\input verifier-tool 
+
+\input implementation
+
+\input experimental
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+%\appendix
+
+%\input installation
+
+%\input rmm_example
+
+%\input tutorial
+
+\end{document}

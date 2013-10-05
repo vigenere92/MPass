@@ -1,0 +1,87 @@
+\section{Experimental Results}
+
+
+
+The tool is available on GitHub \cite{github.MPass}, where we also
+supply the source of all experiments listed below.
+%
+The tool uses the frontend of the implementation provided by Marques et al in 
+\cite{CSV2UPPAAL}, to get {\sc xml} representations of the protocols from
+spreadsheets.
+\\\\
+\Cref{tbl:experiments} displays the results of running \MPass\ tool on 
+some examples;  whereas in \Cref{tbl:experiments_f}, we show the 
+results of running \MPass\ on some protocols which are intentionally modified to 
+ introduced some errors. The displayed  examples are   taking  from \cite{JRSVgit} 
+which are further described in \cite{MPSV11} and \cite{RSV11}.
+Bounded Retransmission Protocol (BRP) is also adapted from \cite{AABJ04}.
+%\hspace{-5mm}Verification is achieved by taking the examples from \cite{JRSVgit} 
+%which are further described in \cite{MPSV11} and \cite{RSV11}.
+%Bounded Retransmission Protocol  is also adapted from \cite{AABJ04}.
+%%
+\\\\
+Both the tables should be interpreted as follows :\\
+\\\hspace*{5mm}{\bf Column} {\bf P} lists the name of protocol under analysis.
+\\\hspace*{5mm}{\bf Column} {\bf Bad} lists the name of the process followed by the state in that process
+\\\hspace*{5mm}which we are trying to reach.
+\\\hspace*{5mm}{\bf Column} {\bf Sem} lists the channel semantics used for the specific analysis.
+\\\hspace*{5mm}{\bf Column} {\bf channel} lists the type of channel used in the message passing.
+\\\hspace*{5mm}{\bf Column} {\bf Constraint Generation, SMT  and Total} lists the time taken to generate
+\\\hspace*{5mm} the formula, time taken by the SMT solver to check the satisfiability of this formula \\\hspace*{5mm}and the total time of the analysis respectively.
+\\\hspace*{5mm}{\bf Column} {\bf Assert} lists the number of assertions fed to the SMT solver
+\\\hspace*{5mm}{\bf Column} {\bf Ph.} lists the bound on the number of phases, and finally,
+\\\hspace*{5mm}{\bf Column} {\bf Res} lists the result of the analysis. The results are listed as {\bf U} for Unsafe
+\\\hspace*{5mm}or Bad state is reachable, ie, {\bf sat} or {\bf S} for possibly safe or Bad state is not
+\\\hspace*{5mm}reachable (under the bounded-phase assumption), ie, {\bf unsat}.
+\\\\
+Results displayed here are for few protocols only. Rest of the results are available online at \cite{github.MPass} 
+in the 'MPass\textunderscore result' folder which is inside the 'MPass-master' directory.
+
+
+
+\begin{table}
+  \begin{center}
+    {\scriptsize{
+        \begin{tabular}{| l | l | l | l | l | l | l | l | l | l |}
+        \hline
+        \hline
+        {\bf P} & {\bf Bad} & {\bf Sem} & {\bf Channel} & {\bf \shortstack{Const. \\ gen.}} & {\bf SMT} & {\bf Total} & {\bf Assert} & {\bf Ph.} & {\bf Res} \\
+        \hline
+        \hline
+        ABP & \shortstack{RECEIVER Invalid} & UCS & process & 0.07 sec & 74 sec & 74.07 sec & 4025 & 4 & U(sat) \\ \hline
+        ABP & \shortstack{RECEIVER Invalid} & LCS & process & 0.04 sec & 1 sec & 1.04 sec & 2519 & 3 & S(unsat) \\ \hline
+        ABP & \shortstack{RECEIVER Invalid} & SLCS & process & 0.03 sec & 2 sec & 2.03 sec & 2519 & 3 & S(unsat) \\ \hline
+        BRP & \shortstack{RECEIVER Invalid} & UCS & process & 0.3 sec & 2 sec & 2.3 sec & 23461 & 3 & S(unsat) \\ \hline
+        BRP & \shortstack{RECEIVER Invalid} & LCS & process & 0.28 sec & 2 sec & 2.28 sec & 23461 & 3 & S(unsat) \\ \hline
+        BRP & \shortstack{RECEIVER Invalid} & SLCS & process & 0.28 sec & 1 sec & 1.28 sec & 23461 & 3 & S(unsat) \\ \hline
+        STP & \shortstack{A Invalid} & UCS & process & 0.03 sec & 4 sec & 4.03 sec & 2354 & 6 & U(sat) \\ \hline
+        STP & \shortstack{A Invalid} & LCS & process & 0.02 sec & 0 sec & 0.02 sec & 1348 & 4 & S(unsat) \\ \hline
+        STP & \shortstack{A Invalid} & SLCS & process & 0.02 sec & 0 sec & 0.02 sec & 1348 & 4 & S(unsat) \\ \hline
+        \hline
+        \end{tabular}} 
+    }
+  \end{center}
+\caption{Verification Results for examples from \cite{MPSV11} and \cite{JRSVgit}}\label{tbl:experiments}
+\end{table}
+
+\begin{table}
+  \begin{center}
+    {\scriptsize{
+        \begin{tabular}{| l | l | l | l | l | l | l | l | l | l |}
+        \hline
+        \hline
+        {\bf P} & {\bf Bad} & {\bf Sem} & {\bf Channel} & {\bf \shortstack{Const. \\ gen.}} & {\bf SMT} & {\bf Total} & {\bf Assert} & {\bf Ph.} & {\bf Res} \\
+        \hline
+        \hline
+        ABP\textunderscore F & \shortstack{RECEIVER Invalid} & SLCS & process & 0.04 sec & 1 sec & 1.04 sec & 1275 & 2 & U(sat) \\ \hline
+        ABP\textunderscore F & \shortstack{RECEIVER Invalid} & UCS & process & 0.04 sec & 1 sec & 1.04 sec & 1275 & 2 & U(sat) \\ \hline
+        SlidingWindow\textunderscore F & \shortstack{RECEIVER Invalid} & SLCS & process & 0.02 sec & 0 sec & 0.02 sec & 913 & 1 & U(sat) \\ \hline
+        SlidingWindow\textunderscore F & \shortstack{RECEIVER Invalid} & UCS & process & 0.03 sec & 0 sec & 0.03 sec & 913 & 1 & U(sat) \\ \hline
+        Synchronous\textunderscore F & \shortstack{B Invalid} & SLCS & process & 0.02 sec & 0 sec & 0.02 sec & 713 & 3 & U(sat) \\ \hline
+        Synchronous\textunderscore F & \shortstack{B Invalid} & UCS & process & 0.02 sec & 0 sec & 0.02 sec & 713 & 3 & U(sat) \\ \hline
+        \hline
+        \end{tabular}} 
+    }
+  \end{center}
+\caption{Verification Results for buggy (faulty) examples}\label{tbl:experiments_f}
+\end{table}

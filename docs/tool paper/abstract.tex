@@ -1,0 +1,17 @@
+\begin{abstract}
+\MPass\ is a  freely available, open source, tool for the verification of message passing programs communicating in an asynchronous manner over unbounded  channels.   The verification task is non-trivial as it involves exploring state spaces of arbitrary or even infinite sizes. Even for programs that only manipulate finite range variables, the sizes of the channels could grow unboundedly, and hence the state spaces that need to be explored could be of infinite size. \MPass\ addresses the bounded-phase reachability problem, where each process is allowed to perform a bounded number of phases during any  run of the system.  In each phase, a process can perform either send transitions or receive transitions (but not both). However, this doesn't bound the  number of context switches between  processes or the size of the channels but just the number of alternations between receive and 
+send transitions of each process. Currently, \MPass\ can decide bounded-phase reachability problem for three types of channel semantics,  namely lossy, stuttering and unordered channels. Messages inside these channels can be lost, duplicated and re-arranged, respectively. \MPass\ efficiently  and uniformly reduces the bounded-phase reachability problem into the satisfiability of quantifier-free Presburger formula for each of the above mentioned semantics.
+\end{abstract}
+
+
+%\MPass\ is a  freely available, open source, tool for the verification of message passing programs communicating in an asynchronous manner over unbounded imperfect channels.
+%It works on an approach called as \emph{bounded-phase} reachability analysis which verifies the reachability problem of protocols
+%having their phase bounded. Each process in such programs can perform a computation in which 
+%the number of phases is bounded. In each phase, a process can perform 
+%either send transitions or receive transitions (but not both). However, this doesn't limit the 
+%number of context switches between two process but just the number of alternations between receive and 
+%send transitions.Currently, \MPass\ can decide reachability problem for three types of channel semantics, 
+%namely \emph{lossy, stuttering and unordered} channels. These channels allow messages inside them 
+%to be lost, dublicated and re-arranged respectively.
+%It translates bounded phase reachability problem into the satisfiability of quantifier-free Presburger formulas for each of the above mentioned semantics.Since the number of channels, messages and the architecture depends on the protocol used, the verification task is non-trivial
+%and requires uniform as well as efficient translation of bounded phase reachability problem into quantifier-free Presburger formula.

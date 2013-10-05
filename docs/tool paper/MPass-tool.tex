@@ -1,0 +1,104 @@
+\section{MPass Tool}\label{sec:logic}
+
+\MPass\ performs two different levels of extraction in order to analyze the reachability 
+problem for a given program. First it translates the protocol defined in {\tt xml-files} into 
+\emph{Non-Deterministic Finite Automaton} (NFA) and then generates quantifier-free Presburger formula from this NFA .
+
+%\hspace{-5mm}Verification is achieved by taking the examples from \cite{JRSVgit} 
+%which are further described in \cite{MPSV11} and \cite{RSV11}.
+%Bounded Retransmission Protocol is also adapted from \cite{AABJ04}.
+%
+
+\subsection{Xml to Automata}\label{subsec:copies}
+Protocols are used in the format of {\tt xml-files} present within the tool repository inside the 'Includes' folder. The protocols, thus, can be modified in a simple manner by changing the fields in xml-files. The first task of MPass is to translate the protocols defined in {\tt xml-files} into 
+\emph{Non-Deterministic Finite Automata} (NFA). In order to achieve this, it takes xml-file path of the Protocol 
+as an input and then uses C++ library of {\tt lemon} to translate the protocol into NFA as described below:
+
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{l@{\hspace{20pt}}}
+$<${\bf rule} id="Q0{\textunderscore\textunderscore}ack1{\textunderscore\textunderscore}INBOUND"{\bf $>$}\\
+\quad {\bf $<$pre$>$}\\
+    \quad \quad {\bf $<$current{\textunderscore}state$>$}Q0{\bf $<$/current{\textunderscore}state$>$}\\
+    \quad \quad {\bf $<$received{\textunderscore}message$>$}ack1{\bf $<$/received{\textunderscore}message$>$}\\
+    \quad \quad {\bf $<$channel$>$}c1{\bf $<$/channel$>$}\\
+  \quad {\bf $<$/pre$>$}\\
+  \quad {\bf $<$post$>$}\\
+    \quad \quad {\bf $<$next{\textunderscore}state$>$}Q1{\bf $<$/next{\textunderscore}state$>$}\\
+     \quad \quad {\bf $<$send{\textunderscore}message$>$}mesg0{\bf $<$/send{\textunderscore}message$>$}\\
+      \quad \quad {\bf $<$channel$>$}c0{\bf $<$/channel$>$}\\
+  \quad {\bf $<$/post$>$}\\
+{\bf $<$/rule$>$}\\
+\end{tabular}
+\end{center}
+\caption{An example of xml code for ABP Protocol}\label{fig:code}
+\end{figure}
+
+The above rule adds two transitions from the state {\tt Q0} to the state {\tt Q1}.
+The first transition defines the rule of receiving the message {\tt ack1} from the channel {\tt c1} 
+whereas the second transition defines the rule of sending the message {\tt mesg0} into the channel {\tt c0}.
+Each process in a protocol contains one or more of  such rules which in together defines the automaton for that 
+process within the given protocol.
+
+
+Now, since  for each process  we bound  the number of  phases, where  each phase contains either send or 
+receive transitions (but not both), we make two automata for each process, one containing all 
+except the receive transitions (send copy of that process) and the other containing all except the send 
+transitions (receive copy of that process).
+
+
+In this way, we have constructed \emph{2*Number of Process} automata for the input protocol.
+
+
+\subsection{Automata to Quantifier-free Presburger Formulas}
+Verification of protocol for reachability problem is analyzed by generating a  \emph{quantifier-free Presburger formula} from the automaton 
+constructed as shown in {\tt figure 1} and then using the help of modern SMT solver namely \emph{Z3 theorem prover} to check the satisfiability of this formula. 
+More information  regarding the  translation of reachability for \emph{bounded-phase-automata} 
+into the satisfiability of \emph{quantifier-free Presburger formulas} can be found in \cite{AAC13}.
+
+
+In order to generate the quantifier-free Presburger formula,  some variables of a particular \emph{form} have to be 
+defined and thus, for all the transitions present within each automata, we'll introduce a number of variables as shown below in table \Cref{tbl:variables}:
+\begin{table}[ht]
+  \begin{center}
+    \begin{tabular}{|l|l|}
+      \hline
+      Variable name & Variable code\\
+      \hline
+      Index-variable & i-var\\
+      Occurence-variable & o-var\\
+      Match-variable & m-var\\
+      \hline
+    \end{tabular}
+  \end{center}
+  \caption{Variables associated with each transitions}\label{tbl:variables}
+\end{table}
+
+
+Variable declaration and definition are explained briefly in \cite{AAC13}.
+
+
+Since we  \emph{bounded-phase} reachability problem, \MPass\ generates variables for both send and receive copy of 
+each process and then duplicates them \emph{k} times (where k is some natural number denoting the bound for the number of phases within each process) which are then further used to generate Presburger formulas. In this way we have ignored the inefficient process of making 
+multiple copies for each process as done in \cite{AAC13}.
+
+If the result of the SMT-solver for these set of formulas (one of them being displayed in \Cref{fig:examples}) is 
+satisfiable (sat), then the \emph{Bad State} is reachable and we have an UNSAFE (U) condition otherwise we have a SAFE (S) condition, ie, 
+\emph{Bad State} is  not reachable for the given bound.
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{l@{\hspace{20pt}}}
+$
+\left(\occvarof{\transition}=1\right)
+\wedge
+\left(\occvarof{\transition'}=1\right)
+\wedge
+\left(\indexvarof{\transition}<\indexvarof{\transition'}\right)
+\implies
+\left(\matchingvarof{\transition}<\matchingvarof{\transition'}\right)
+$.
+\end{tabular}
+\end{center}
+\caption{An example of a \emph{quantifier-free Presburger formulas}}\label{fig:examples}
+\end{figure}
