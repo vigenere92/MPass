@@ -34,6 +34,7 @@ along with MPass. If not, see <http://www.gnu.org/licenses/>.
 #include<sys/time.h>
 #include<time.h>
 #include<pwd.h>
+#include<unistd.h>
 
 using namespace std;
 using namespace pugi;
